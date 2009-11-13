@@ -1,0 +1,117 @@
+================================================================================
+About:
+================================================================================
+
+This Bot is a very simple Relay Bot to allow the linking of a single channel
+across multiple networks.
+
+This bot was originally designed for #DMDirc after a similar bot was coded for
+#IRCReport, this bot soon replaced the original IRCReport bot.
+
+================================================================================
+Usage:
+================================================================================
+
+The bot has no concept of access levels other than "half-op or above", "admin"
+or "anyone". By default "admin" is the same as "half-op or above" unless 
+
+Half-Op or above on the channel:
+---------
+!sync                            -> Set all topics to that of the main channel
+!resettopic                      -> Unset and reset all the topics to ensure
+                                    they are all the same
+!topic <topic>                   -> Set the topic in all channels to <topic>
+!kick <nick>[@network] [reason]  -> Kick a user (optionally on another network)
+                                    with the given reason, or "..." if no reason
+                                    is given.
+
+
+All Users (if publicNames is true, else Half-Op or above):
+---------
+!names <network>|*               -> Show who is on the channel on the given
+                                    network (* == all)
+
+Admins (if publicAdmin is true, else Half-Op or above):
+---------
+!rraw <network> <command>        -> An admin can make the bot send the raw
+                                    command <command> on the network <network>
+!raw <command>                   -> An admin can make the bot send the raw
+                                    command <command> on the current network
+
+(!raw and !sync can be used on any network provided the conditions are met)
+
+================================================================================
+Requirements:
+================================================================================
+
+JDK 1.6
+Ant
+
+================================================================================
+Configuration:
+================================================================================
+
+Currently configuration is done in the source code.
+
+Edit the variables:
+  * relayChannelName  -> Channel to relay (must be the same on all networks)
+  * wantedNick        -> Nickname for the bot to use
+  * realName          -> Real Name for the bot to use
+  * wantedIP          -> The IP Address to attempt to bind to when connecting
+  * welcomeMessage    -> A list of lines to send to users who join the relayed
+                         channels.
+  * publicAdmin       -> Should half-op or above be considered admins?
+                         If this is set to false then you should edit the
+                         function `isAdmin` at the bottom of the file.
+  * publicNames       -> Should !names be open to anyone?
+  * relayCommands     -> Should ! commands that are not understood by the bot
+                         be relayed to the main channel for other bots?
+
+Theres also the list of servers which are defined as:
+  * newParser("server.address", port, "password", new String[]{"Lines to send", "on connect"});
+
+Note that at least 1 parser must be defined as the "mainParser", and that lines
+defined as onConnect lines are also sent any time the bot regains its nickname.
+
+================================================================================
+Compiling and running:
+================================================================================
+ant clean jar run
+
+================================================================================
+Getting assistance:
+================================================================================
+
+This code is provided without any warranty or anything, nor is it expected to be
+perfect and bug free. No guarantee as to fitness for purpose is provided either.
+
+The code is also released without any format support, however informal support
+can be obtained in #DMDirc on Quakenet, Chatspike, Freenode or OFTC, and on
+#IRCReport on Quakenet, Freenode or Chatspike (ask for 'Dataforce')
+
+================================================================================
+Client Support:
+================================================================================
+
+Support for the output format of the bot is available in a variety of clients,
+most notably DMDirc (http://DMDirc.com/) which can be found at:
+
+http://addons.dmdirc.com/addon/50
+
+However a number of #IRCReport regulars have coded similar scripts/addons for
+other clients:
+
+http://ircreport.com/book/docs/ircreport/relay-plugins
+
+================================================================================
+Thanks:
+================================================================================
+
+* Elmaron from #IRCReport for the initial C implementation of the relay bot that
+  the output from this one is based on
+* Regulars of #DMDirc and #IRCReport for putting up with me restarting the bot
+  alot to test it, and for making scripts/addons/plugins to support it.
+
+================================================================================
+EOF
+================================================================================
